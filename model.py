@@ -55,7 +55,18 @@ def character_maps(words_list):
 
     return character_map, code_map
 
+def one_hot(code, C):
+    '''A single one-hot vector for one letter-code.'''
+    x = np.zeros(C)
+    x[code] = 1.
+    return x
 
+def vectorize_word(word, character_map, C):
+    codes = [character_map[letter] for letter in word]
+    vectors = np.array([one_hot(code, C) for code in codes])
+    return vectors
+
+# build graph
 
 def input_letter(prev_y, prev_a, var):
     '''
@@ -92,6 +103,8 @@ def train():
 
     # create dataset
     dataset = create_dataset(words)
+    character_map, code_map = character_maps(words)
+    C = len(character_map)
 
     # test dataset
     iterator = dataset.make_one_shot_iterator()

@@ -41,6 +41,14 @@ class Tests(unittest.TestCase):
         self.assertEqual(code_map[character_map['G']], 'G')
         self.assertEqual(len(character_map), len(code_map))
 
+    def test_vectorize_word(self):
+        words = ["Galadriel", "Elrond"]
+        character_map, _ = model.character_maps(words)
+        C = len(character_map)
+        word = "Elrond"
+        word_vecs = model.vectorize_word(word, character_map, C)
+        self.assertEqual(word_vecs.shape, (len(word), C))
+
         
 
 
