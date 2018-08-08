@@ -4,7 +4,7 @@ A letter-based language model for generating new words similar to a trained-on l
 
 ## A Word on Word Lengths
 
-Since we impose no artificial limit on the length of a word, initial word-lengths will be largely up to chance. The model will continue adding letters until it predicts the <EOW> token. At the beginning, before much training has taken place, we would expect the probability of getting <EOW> to be roughly 1/C, where C is the number of possible characters (including tokens like <EOW>). 
+Since we impose no artificial limit on the length of a word, initial word-lengths will be largely up to chance. The model will continue adding letters until it predicts the \<END> token. At the beginning, before much training has taken place, we would expect the probability of getting \<END> to be roughly 1/C, where C is the number of possible characters (including tokens like \<END>). 
 
 Technically, it would be possible for the untrained model to produce a word thousands of characters long, which is not really what we want. Do we need to be concerned about the possibility of giant words causing problems, or this unlikely enough to not be an issue? Under these conditions, how long would we expect words to be? 
 
@@ -21,6 +21,10 @@ Let's think it through:
 
 <!-- P(l) = ((c - 1)/c)^l * (1/c) -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;P(l)&space;=&space;\left&space;(&space;\frac{C-1}{C}&space;\right&space;)^{l}&space;*&space;\left&space;(&space;\frac{1}{C}&space;\right&space;)" title="\huge P(l) = \left ( \frac{C-1}{C} \right )^{l} * \left ( \frac{1}{C} \right )" />
+
+We can visualize these word-lengths probabilities with a histogram:
+
+
 
 ## Acknowledgements
 
