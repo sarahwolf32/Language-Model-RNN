@@ -11,16 +11,16 @@ Technically, it would be possible for the untrained model to produce a word thou
 Let's think it through:
 
 <!-- P(end) = 1/c -->
-<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(end)&space;=&space;\frac{1}{C}" title="\huge P(end) = \frac{1}{C}" />
+<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(end)&space;=&space;\frac{1}{C}" title="\large P(end) = \frac{1}{C}" />
 
 <!-- P(letter) = (c - 1)/c -->
-<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(letter)&space;=&space;\frac{C-1}{C}" title="\huge P(letter) = \frac{C-1}{C}" />
+<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(letter)&space;=&space;\frac{C-1}{C}" title="\large P(letter) = \frac{C-1}{C}" />
 
 <!-- P(l) = P(letter)^l * P(end) -->
-<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(l)&space;=&space;P(letter)^{l}&space;*&space;P(end)" title="\huge P(l) = P(letter)^{l} * P(end)" />
+<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(l)&space;=&space;P(letter)^{l}&space;*&space;P(end)" title="\large P(l) = P(letter)^{l} * P(end)" />
 
 <!-- P(l) = ((c - 1)/c)^l * (1/c) -->
-<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(l)&space;=&space;\left&space;(&space;\frac{C-1}{C}&space;\right&space;)^{l}&space;*&space;\left&space;(&space;\frac{1}{C}&space;\right&space;)" title="\huge P(l) = \left ( \frac{C-1}{C} \right )^{l} * \left ( \frac{1}{C} \right )" />
+<img src="https://latex.codecogs.com/gif.latex?\huge&space;P(l)&space;=&space;\left&space;(&space;\frac{C-1}{C}&space;\right&space;)^{l}&space;*&space;\left&space;(&space;\frac{1}{C}&space;\right&space;)" title="\large P(l) = \left ( \frac{C-1}{C} \right )^{l} * \left ( \frac{1}{C} \right )" />
 
 ## Acknowledgements
 
