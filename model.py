@@ -12,7 +12,7 @@ What can this model do?
 
 filename = 'elvish_words.txt'
 
-# data handling
+# load words
 
 def words_list(filename):
     '''
@@ -33,6 +33,29 @@ def create_dataset(words_list):
     words = tf.constant(words_list)
     dataset = tf.data.Dataset.from_tensor_slices(words)
     return dataset
+
+# build character maps
+
+def character_maps(words_list):
+    i = 0
+    character_map = {}
+
+    # assign code to each unique character
+    for word in words_list:
+        for char in word:
+            if not char in character_map:
+                character_map[char] = i
+                i += 1
+
+    # add any special codes
+    character_map['<END>'] = i
+
+    # reverse dictionary to look up in other direction
+    code_map = {v: k for k, v in character_map.iteritems()}
+
+    return character_map, code_map
+
+
 
 def input_letter(prev_y, prev_a, var):
     '''

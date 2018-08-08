@@ -28,6 +28,22 @@ class Tests(unittest.TestCase):
         self.assertEqual(y_pred.shape, (1, c))
         self.assertEqual(a.shape, (1, n))
 
+    def test_character_maps(self):
+        words = ["Galadriel", "Elrond", "Evenstar", "Bilbo Baggins"]
+        character_map, code_map = model.character_maps(words)
+
+        # test character map {char: Int}
+        self.assertTrue('G' in character_map)
+        self.assertTrue(' ' in character_map)
+        self.assertFalse('w' in character_map)
+
+        # test code map {Int: char}
+        self.assertEqual(code_map[character_map['G']], 'G')
+        self.assertEqual(len(character_map), len(code_map))
+
+        
+
+
 
 if __name__ == '__main__':
     unittest.main()
