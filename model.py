@@ -11,7 +11,6 @@ What can this model do?
 # hyperparameters
 
 filename = 'elvish_words.txt'
-nodes = 10
 
 # data handling
 
@@ -37,26 +36,26 @@ def create_dataset(words_list):
 
 def input_letter(prev_y, prev_a, var):
     '''
-    prev_y: A placeholder for y<t-1>, the previous character. A one-hot vector of shape [c, 1]
-    prev_a: A tensor for a<t-1>, the previous activation. Shaped [n, 1]
+    prev_y: A placeholder for y<t-1>, the previous character. A one-hot vector of shape [1, c]
+    prev_a: A tensor for a<t-1>, the previous activation. Shaped [1, n]
     var: Dictionary of trainable weights and biases
-        Wa: [n, n+c]
-        ba: [n + 1]
-        Wy: [c, n]
-        by: [c, 1]
+        Wa: [n+c, n]
+        ba: [1, n]
+        Wy: [n, c]
+        by: [1, c]
     returns: y<t> and a<t>
     '''
     # unwrap vars
     Wa, ba, Wy, by = var['Wa'], var['ba'], var['Wy'], var['by']
 
-    # concatenate prev_a and prev_y to create a tensor of shape [c + n, 1]
-    inputs = tf.concat([prev_y, prev_a], axis=0)
+    # concatenate prev_a and prev_y to create a tensor of shape [1, c + n]
+    inputs = tf.concat([prev_y, prev_a], axis=1)
 
     # a = tanh( Wa[ prev_a, prev_y ] + ba )
-    a = tf.nn.tanh(tf.matmul(Wa, inputs) + ba)
+    a = tf.nn.tanh(tf.matmul(inputs, Wa) + ba)
 
     # y_pred = sigmoid( dot(Wy, a) + by )
-    y_pred = tf.nn.sigmoid(tf.matmul(Wy, a) + by)
+    y_pred = tf.nn.sigmoid(tf.matmul(a, Wy) + by)
 
     return (y_pred, a)
 
@@ -85,5 +84,4 @@ def train():
             print("Done!")
             break
 
-# test
 
