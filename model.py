@@ -12,6 +12,8 @@ What can this model do?
 
 filename = 'elvish_words.txt'
 nodes = 10
+learning_rate = 0.001
+weights_init_stddev = 0.2
 
 # load words
 
@@ -102,8 +104,8 @@ def input_word(y, var, C):
     '''
 
     # x = [0, y<1>, y<2>,...,y<t>]
-    x = np.zeros((y.shape[0] + 1, C))
-    x[1:, :] = y
+    zeros = tf.zeros([1, C])
+    x = tf.concat([zeros, y], axis=0)
 
     # initialize a<0>
     a_t = np.zeros((1, nodes))
@@ -125,6 +127,29 @@ def compute_loss(y, y_pred):
     '''
     loss = -tf.reduce_sum(y * tf.log(y_pred))
     return loss
+
+def create_trainer(C, character_map):
+
+    # create variables
+    Wa = tf.Variable(tf.random_normal([nodes + C, nodes], stddev=weights_init_stddev), name='Wa')
+    ba = tf.Variable(tf.zeros([1, nodes]), name='ba')
+    Wy = tf.Variable(tf.random_normal([nodes, C], stddev=weights_init_stddev), name='Wy')
+    by = tf.Variable(tf.zeros([1, C]), name='by')
+    var = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
+
+    y_holder = tf.placeholder(tf.float32, shape=[None, C])
+    y_pred = input_word(y_holder, var, C)
+    
+    # add <END> tag to y_holder
+    end_code_vec = one_hot(character_map['<END>'], C)
+    y_extended = tf.concat([y_holder, end_code_vec], axis=0)
+
+    # train
+    loss = compute_loss(y_extended, y_pred)
+    adam = tf.train.AdamOptimizer(learning_rate=learning_rate)
+    trainer = adam.minimize(loss)
+
+    return trainer
 
 
 def train():

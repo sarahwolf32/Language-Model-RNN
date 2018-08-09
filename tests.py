@@ -78,6 +78,23 @@ class Tests(unittest.TestCase):
 
         self.assertAlmostEqual(loss_val, 2.526, places=2)
 
+    def test_create_trainer(self):
+
+        # setup
+        words = ["Galadriel", "Elrond"]
+        character_map, _ = model.character_maps(words)
+        C = len(character_map)
+
+        # create trainer
+        trainer = model.create_trainer(C, character_map)
+        init = tf.global_variables_initializer()
+
+        # run
+        sess = tf.Session()
+        sess.run(init)
+        word = "Elrond"
+        y = model.vectorize_word(word, character_map, C)
+        sess.run(trainer, feed_dict={y_holder:y})
 
 
 if __name__ == '__main__':
