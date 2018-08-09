@@ -5,6 +5,15 @@ import numpy as np
 
 class Tests(unittest.TestCase):
 
+    def random_vars(self, n, c):
+        vars_dict = {
+            'Wa': np.random.rand(n + c, n),
+            'ba': np.random.rand(1, n),
+            'Wy': np.random.rand(n, c),
+            'by': np.random.rand(1, c)
+        }
+        return vars_dict
+
     def test_input_letter(self):
 
         # setup
@@ -13,11 +22,7 @@ class Tests(unittest.TestCase):
         prev_y = np.zeros((1, c))
         prev_y[0][0] = 1.
         prev_a = np.random.rand(1, n)
-        vars_dict = {
-            'Wa': np.random.rand(n + c, n),
-            'ba': np.random.rand(1, n),
-            'Wy': np.random.rand(n, c),
-            'by': np.random.rand(1, c)}
+        vars_dict = self.random_vars(n, c)
 
         # run
         y_pred_var, a_var = model.input_letter(prev_y, prev_a, vars_dict)
@@ -48,6 +53,21 @@ class Tests(unittest.TestCase):
         word = "Elrond"
         word_vecs = model.vectorize_word(word, character_map, C)
         self.assertEqual(word_vecs.shape, (len(word), C))
+
+    def test_input_word(self):
+        words = ["Galadriel", "Elrond"]
+        character_map, _ = model.character_maps(words)
+        C = len(character_map)
+        word = "Elrond"
+
+        y = model.vectorize_word(word, character_map, C)
+        var = self.random_vars(model.nodes, C)
+        y_pred_vars = model.input_word(y, var, C, model.nodes)
+
+        sess = tf.Session()
+        y_pred = [sess.run(y) for y in y_pred_vars]
+        print(len(y_pred))
+
 
         
 

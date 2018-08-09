@@ -11,6 +11,7 @@ What can this model do?
 # hyperparameters
 
 filename = 'elvish_words.txt'
+nodes = 10
 
 # load words
 
@@ -93,6 +94,28 @@ def input_letter(prev_y, prev_a, var):
 
     return (y_pred, a)
 
+def input_word(y, var, C, num_nodes):
+    '''
+    y: All the one-hot vectors for the letters in the word, shaped [word_len, C]
+    var: Dictionary of trainable weights and biases
+    returns: y_pred, shaped [word_len + 1, C]
+    '''
+
+    # x = [0, y<1>, y<2>,...,y<t>]
+    x = np.zeros((y.shape[0] + 1, C))
+    x[1:, :] = y
+
+    # initialize a<0>
+    a_t = np.zeros((1, nodes))
+
+    # sequentially input letters
+    y_pred = []
+    for t in range(x.shape[0]):
+        x_t = x[t].reshape((1, -1))
+        y_pred_t, a_t =  input_letter(x_t, a_t, var)
+        y_pred.append(y_pred_t)
+
+    return y_pred
 
 
 def train():
@@ -115,6 +138,8 @@ def train():
     while True:
         try:
             word = sess.run(next_item)
+            y = vectorize_word(word, character_map, C)
+
             print(word)
         except Exception:
             print("Done!")
