@@ -62,11 +62,14 @@ class Tests(unittest.TestCase):
 
         y = model.vectorize_word(word, character_map, C)
         var = self.random_vars(model.nodes, C)
-        y_pred_vars = model.input_word(y, var, C, model.nodes)
+        y_pred_vars = model.input_word(y, var, C)
 
         sess = tf.Session()
         y_pred = [sess.run(y) for y in y_pred_vars]
-        print(len(y_pred))
+
+        self.assertEqual(len(y_pred), len(word) + 1)
+        self.assertEqual(y_pred[0].shape, (1, C))
+
 
 
         

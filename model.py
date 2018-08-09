@@ -94,11 +94,11 @@ def input_letter(prev_y, prev_a, var):
 
     return (y_pred, a)
 
-def input_word(y, var, C, num_nodes):
+def input_word(y, var, C):
     '''
     y: All the one-hot vectors for the letters in the word, shaped [word_len, C]
     var: Dictionary of trainable weights and biases
-    returns: y_pred, shaped [word_len + 1, C]
+    returns: y_pred, list of length [word_len + 1], where each item is shaped [1, C]
     '''
 
     # x = [0, y<1>, y<2>,...,y<t>]
