@@ -65,14 +65,9 @@ class Tests(unittest.TestCase):
         y_pred_vars = model.input_word(y, var, C)
 
         sess = tf.Session()
-        y_pred = [sess.run(y) for y in y_pred_vars]
+        y_pred = sess.run(y_pred_vars)
 
-        self.assertEqual(len(y_pred), len(word) + 1)
-        self.assertEqual(y_pred[0].shape, (1, C))
-
-
-
-        
+        self.assertEqual(y_pred.shape, (len(word) + 1, C))
 
 
 

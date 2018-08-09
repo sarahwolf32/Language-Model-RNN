@@ -98,7 +98,7 @@ def input_word(y, var, C):
     '''
     y: All the one-hot vectors for the letters in the word, shaped [word_len, C]
     var: Dictionary of trainable weights and biases
-    returns: y_pred, list of length [word_len + 1], where each item is shaped [1, C]
+    returns: y_pred, shaped [word_len + 1, C]  
     '''
 
     # x = [0, y<1>, y<2>,...,y<t>]
@@ -113,8 +113,9 @@ def input_word(y, var, C):
     for t in range(x.shape[0]):
         x_t = x[t].reshape((1, -1))
         y_pred_t, a_t =  input_letter(x_t, a_t, var)
-        y_pred.append(y_pred_t)
+        y_pred.append(y_pred_t[0]) 
 
+    y_pred = tf.stack(y_pred)
     return y_pred
 
 
