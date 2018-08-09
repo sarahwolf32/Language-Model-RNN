@@ -118,6 +118,14 @@ def input_word(y, var, C):
     y_pred = tf.stack(y_pred)
     return y_pred
 
+def compute_loss(y, y_pred):
+    '''
+    y: One hot vectors for correct letter values. Shaped [word_len + 1, C].
+    y_pred: Predicted probability distribution for letter values. Shaped [word_len + 1, C].
+    '''
+    loss = -tf.reduce_sum(y * tf.log(y_pred))
+    return loss
+
 
 def train():
 

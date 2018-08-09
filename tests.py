@@ -69,6 +69,15 @@ class Tests(unittest.TestCase):
 
         self.assertEqual(y_pred.shape, (len(word) + 1, C))
 
+    def test_loss(self):
+        y = tf.constant([[0., 1., 0., 0., 0.],[1., 0., 0., 0., 0.]])
+        y_pred = tf.constant([[0.3, 0.1, 0.2, 0.3, 0.1], [0.8, 0.1, 0.05, 0.04, 0.01]])
+        loss = model.compute_loss(y, y_pred)
+        sess = tf.Session()
+        loss_val = sess.run(loss)
+
+        self.assertAlmostEqual(loss_val, 2.526, places=2)
+
 
 
 if __name__ == '__main__':
