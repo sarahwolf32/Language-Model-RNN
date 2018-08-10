@@ -1,19 +1,56 @@
 import tensorflow as tf
+import tensorflow.contrib.eager as tfe
 import numpy as np
+import model 
 
 '''
-Can we iterate through a placeholder of [None, c] size?
-Maybe this should be an experiment in eager execution?
-
-Normal RNN style uses padding to force lengths to be predictable.
-This is distasteful, but also a separate issue from sequentiality. How is this normally done?
-
-Options:
-    - eager execution (some refactoring required)
-    - tf.nn.dynamic_rnn (already done the work, don't want to do this)
-    - tf.While (the sequential heart of tf.nn.dynamic_rnn)
+Use eager execution to train my RNN.
 '''
-
-
 
 tf.enable_eager_execution()
+
+# import words
+words = model.words_list(model.filename)
+print("Found " + str(len(words)) + " words!")
+
+# create dataset
+dataset = model.create_dataset(words)
+character_map, code_map = model.character_maps(words)
+C = len(character_map)
+iterator = dataset.make_one_shot_iterator()
+
+# create variables
+nodes = model.nodes
+weights_init_stddev = model.weights_init_stddev
+Wa = tfe.Variable(tf.random_normal([nodes + C, nodes], stddev=weights_init_stddev), name='Wa')
+ba = tfe.Variable(tf.zeros([1, nodes]), name='ba')
+Wy = tfe.Variable(tf.random_normal([nodes, C], stddev=weights_init_stddev), name='Wy')
+by = tfe.Variable(tf.zeros([1, C]), name='by')
+var = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
+
+print("C: " + str(C))
+print("Wa: " + str(Wa.shape))
+print("trainable? " + str(Wa.trainable))
+print("ba: " + str(ba.shape))
+print("Wy: " + str(Wy.shape))
+print("by: " + str(by.shape))
+
+
+
+# train loop
+for tensor in iterator:
+    word = tensor.numpy()
+    print(word)
+    y = model.vectorize_word(word, character_map, C)
+    print("y: " + str(y.shape))
+    y_pred = model.input_word(y, var, C)
+    print("y_pred: " + str(y_pred.shape))
+
+
+    break
+
+
+
+
+
+

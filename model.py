@@ -113,7 +113,7 @@ def input_word(y, var, C):
     # sequentially input letters
     y_pred = []
     for t in range(x.shape[0]):
-        x_t = x[t].reshape((1, -1))
+        x_t = tf.reshape(x[t],[1, -1])
         y_pred_t, a_t =  input_letter(x_t, a_t, var)
         y_pred.append(y_pred_t[0]) 
 
