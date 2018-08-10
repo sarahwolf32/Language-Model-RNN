@@ -46,6 +46,18 @@ for tensor in iterator:
     y_pred = model.input_word(y, var, C)
     print("y_pred: " + str(y_pred.shape))
 
+    # get loss
+    y_with_end = model.add_end_tag(y, C, character_map)
+    print("y-with-end: " + str(y_with_end.shape))
+    lg = tf.log(y_pred)
+    print("log(y-pred) = " + str(lg.shape))
+    print("lg type: " + str(lg.dtype))
+    print("y type: " + str(y_with_end.dtype))
+    print("y type: " + str(y.dtype))
+
+    loss = model.compute_loss(tf.cast(y_with_end, tf.float32), y_pred)
+    print("loss: " + str(loss.numpy()))
+
 
     break
 

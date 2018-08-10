@@ -128,6 +128,12 @@ def compute_loss(y, y_pred):
     loss = -tf.reduce_sum(y * tf.log(y_pred))
     return loss
 
+def add_end_tag(y, C, character_map):
+    end_code_vec = one_hot(character_map['<END>'], C)
+    end_code_vec = tf.reshape(end_code_vec, shape=[1,-1])
+    y_extended = tf.concat([y, end_code_vec], axis=0)
+    return y_extended
+
 def create_trainer(C, character_map):
 
     # create variables
