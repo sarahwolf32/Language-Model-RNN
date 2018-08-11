@@ -33,7 +33,6 @@ def train(config):
     dataset = model.create_dataset(words)
     character_map, code_map = model.character_maps(words)
     C = len(character_map)
-    iterator = dataset.make_one_shot_iterator()
 
     # create variables
     variables, variables_list = model.create_weights(C)
@@ -42,11 +41,12 @@ def train(config):
     optimizer = tf.train.GradientDescentOptimizer(config.learning_rate)
 
     # train loop
-    print("\nSamples after 0 epochs:")
-    sample(5, variables, model, code_map, C)
+    print("\nSamples after no training:")
+    sample(3, variables, model, code_map, C)
     for epoch in range(config.num_epochs):
 
-        for tensor in iterator:
+        losses = []
+        for tensor in dataset.make_one_shot_iterator():
             word = tensor.numpy()
             y = model.vectorize_word(word, character_map, C)
             with tf.GradientTape() as tape:
@@ -55,15 +55,18 @@ def train(config):
                 # get loss
                 y_with_end = model.add_end_tag(y, C, character_map)
                 loss = model.compute_loss(tf.cast(y_with_end, tf.float32), y_pred)
+                losses.append(loss.numpy())
                 #print(word + ": loss = " + str(loss.numpy()))
 
                 # get gradients
                 grads = tape.gradient(loss, variables_list)
                 optimizer.apply_gradients(zip(grads, variables_list))
 
-        print("\nSamples after " + str(epoch) + " epochs:")
-        sample(5, variables, model, code_map, C)
-
+        # print epoch stats
+        print("\nepoch " + str(epoch))
+        sample(3, variables, model, code_map, C)
+        avg_loss = np.mean(losses)
+        print("avg_loss = " + str(avg_loss))
 
 
 

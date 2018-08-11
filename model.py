@@ -23,7 +23,7 @@ class Model:
         '''
         with open(self.config.data_dir) as f:
             words = f.readlines()
-        words = [w.rstrip() for w in words]
+        words = [w.rstrip().lower() for w in words]
         shuffle(words)
         return words
 
