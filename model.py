@@ -105,7 +105,8 @@ class Model:
         Wa, ba, Wy, by = var['Wa'], var['ba'], var['Wy'], var['by']
         inputs = tf.concat([prev_y, prev_a], axis=1)
         a = tf.nn.tanh(tf.matmul(inputs, Wa) + ba)
-        y_pred = tf.nn.sigmoid(tf.matmul(a, Wy) + by)
+        #y_pred = tf.nn.sigmoid(tf.matmul(a, Wy) + by)
+        y_pred = tf.nn.softmax(tf.matmul(a, Wy) + by)
         return (y_pred, a)
 
     def input_word(self, y, var, C):
@@ -139,6 +140,29 @@ class Model:
         '''
         loss = -tf.reduce_sum(y * tf.log(y_pred))
         return loss
+
+    # sample
+
+    def sample_word(self, variables, code_map, C, max_length=20):
+        word = ''
+        x = tf.zeros([1, C])
+        a = np.zeros((1, self.config.nodes))
+
+        while True:
+            x, a = self.input_letter(x, a, variables)
+            y_probs = x.numpy()[0]
+
+            # make a random letter choice weighted by y_probs
+            code = np.random.choice(len(y_probs), p=y_probs)
+            letter = code_map[code]
+            word += letter
+
+            # break if word is finished or exceeded length limit
+            if (letter == '<END>') or (len(word) >= max_length):
+                break
+
+        return word
+
 
 
 

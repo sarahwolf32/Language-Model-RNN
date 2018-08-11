@@ -8,14 +8,18 @@ import argparse
 Use eager execution to train my vanilla-RNN.
 
 My Code Wish List:
-    - write loss to tensorboard (use eager summary)
-    - save model (inherit from keras???)
-    - sample
+    - write loss to tensorboard (use eager summary, might need internet)
+    - save model (inherit from keras???) - need internet to research
     - fix one-hot shapes/types (a little messier than needbe)
 '''
 
 tf.enable_eager_execution()
 
+def sample(n, variables, model, code_map, C):
+    print("drawing samples!")
+    for i in range(n):
+        word = model.sample_word(variables, code_map, C)
+        print(word)
 
 def train(config):
 
@@ -38,7 +42,10 @@ def train(config):
     optimizer = tf.train.GradientDescentOptimizer(config.learning_rate)
 
     # train loop
+    print("\nSamples after 0 epochs:")
+    sample(5, variables, model, code_map, C)
     for epoch in range(config.num_epochs):
+
         for tensor in iterator:
             word = tensor.numpy()
             y = model.vectorize_word(word, character_map, C)
@@ -48,11 +55,16 @@ def train(config):
                 # get loss
                 y_with_end = model.add_end_tag(y, C, character_map)
                 loss = model.compute_loss(tf.cast(y_with_end, tf.float32), y_pred)
-                print(word + ": loss = " + str(loss.numpy()))
+                #print(word + ": loss = " + str(loss.numpy()))
 
                 # get gradients
                 grads = tape.gradient(loss, variables_list)
                 optimizer.apply_gradients(zip(grads, variables_list))
+
+        print("\nSamples after " + str(epoch) + " epochs:")
+        sample(5, variables, model, code_map, C)
+
+
 
 
 
@@ -62,7 +74,7 @@ if __name__=='__main__':
     # config arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('--data-dir', default='elvish_words.txt')
-    parser.add_argument('--num-epochs', type=int, default=1)
+    parser.add_argument('--num-epochs', type=int, default=10)
     parser.add_argument('--nodes', type=int, default=10)
     parser.add_argument('--learning-rate', type=float, default=0.01)
     parser.add_argument('--weights-init-stddev', type=float, default=0.2)
