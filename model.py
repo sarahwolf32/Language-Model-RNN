@@ -12,7 +12,8 @@ What can this model do?
 
 filename = 'elvish_words.txt'
 nodes = 10
-learning_rate = 0.001
+learning_rate = 0.01
+num_epochs = 1
 weights_init_stddev = 0.2
 
 # load words
@@ -134,55 +135,6 @@ def add_end_tag(y, C, character_map):
     y_extended = tf.concat([y, end_code_vec], axis=0)
     return y_extended
 
-def create_trainer(C, character_map):
 
-    # create variables
-    Wa = tf.Variable(tf.random_normal([nodes + C, nodes], stddev=weights_init_stddev), name='Wa')
-    ba = tf.Variable(tf.zeros([1, nodes]), name='ba')
-    Wy = tf.Variable(tf.random_normal([nodes, C], stddev=weights_init_stddev), name='Wy')
-    by = tf.Variable(tf.zeros([1, C]), name='by')
-    var = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
-
-    y_holder = tf.placeholder(tf.float32, shape=[None, C])
-    y_pred = input_word(y_holder, var, C)
-    
-    # add <END> tag to y_holder
-    end_code_vec = one_hot(character_map['<END>'], C)
-    y_extended = tf.concat([y_holder, end_code_vec], axis=0)
-
-    # train
-    loss = compute_loss(y_extended, y_pred)
-    adam = tf.train.AdamOptimizer(learning_rate=learning_rate)
-    trainer = adam.minimize(loss)
-
-    return trainer
-
-
-def train():
-
-    # load words
-    words = words_list(filename)
-    print("Found " + str(len(words)) + " words!")
-
-    # create dataset
-    dataset = create_dataset(words)
-    character_map, code_map = character_maps(words)
-    C = len(character_map)
-
-    # test dataset
-    iterator = dataset.make_one_shot_iterator()
-    next_item = iterator.get_next()
-    sess = tf.Session()
-
-    # one epoch
-    while True:
-        try:
-            word = sess.run(next_item)
-            y = vectorize_word(word, character_map, C)
-
-            print(word)
-        except Exception:
-            print("Done!")
-            break
 
 

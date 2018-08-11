@@ -26,40 +26,30 @@ Wa = tfe.Variable(tf.random_normal([nodes + C, nodes], stddev=weights_init_stdde
 ba = tfe.Variable(tf.zeros([1, nodes]), name='ba')
 Wy = tfe.Variable(tf.random_normal([nodes, C], stddev=weights_init_stddev), name='Wy')
 by = tfe.Variable(tf.zeros([1, C]), name='by')
-var = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
+variables = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
+variables_list = variables.values()
 
-print("C: " + str(C))
-print("Wa: " + str(Wa.shape))
-print("trainable? " + str(Wa.trainable))
-print("ba: " + str(ba.shape))
-print("Wy: " + str(Wy.shape))
-print("by: " + str(by.shape))
-
+# create optimizer
+optimizer = tf.train.GradientDescentOptimizer(model.learning_rate)
 
 
 # train loop
-for tensor in iterator:
-    word = tensor.numpy()
-    print(word)
-    y = model.vectorize_word(word, character_map, C)
-    print("y: " + str(y.shape))
-    y_pred = model.input_word(y, var, C)
-    print("y_pred: " + str(y_pred.shape))
+for epoch in range(model.num_epochs):
+    for tensor in iterator:
+        word = tensor.numpy()
+        y = model.vectorize_word(word, character_map, C)
+        with tf.GradientTape() as tape:
+            y_pred = model.input_word(y, variables, C)
 
-    # get loss
-    y_with_end = model.add_end_tag(y, C, character_map)
-    print("y-with-end: " + str(y_with_end.shape))
-    lg = tf.log(y_pred)
-    print("log(y-pred) = " + str(lg.shape))
-    print("lg type: " + str(lg.dtype))
-    print("y type: " + str(y_with_end.dtype))
-    print("y type: " + str(y.dtype))
+            # get loss
+            y_with_end = model.add_end_tag(y, C, character_map)
+            loss = model.compute_loss(tf.cast(y_with_end, tf.float32), y_pred)
+            print(word + ": loss = " + str(loss.numpy()))
 
-    loss = model.compute_loss(tf.cast(y_with_end, tf.float32), y_pred)
-    print("loss: " + str(loss.numpy()))
+            # get gradients
+            grads = tape.gradient(loss, variables_list)
+            optimizer.apply_gradients(zip(grads, variables_list))
 
-
-    break
 
 
 
