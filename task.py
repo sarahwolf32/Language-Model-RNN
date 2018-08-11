@@ -11,7 +11,6 @@ My Code Wish List:
     - write loss to tensorboard (use eager summary)
     - save model (inherit from keras???)
     - sample
-    - create-weights method in model
     - fix one-hot shapes/types (a little messier than needbe)
 '''
 
@@ -33,14 +32,7 @@ def train(config):
     iterator = dataset.make_one_shot_iterator()
 
     # create variables
-    nodes = config.nodes
-    weights_init_stddev = config.weights_init_stddev
-    Wa = tfe.Variable(tf.random_normal([nodes + C, nodes], stddev=weights_init_stddev), name='Wa')
-    ba = tfe.Variable(tf.zeros([1, nodes]), name='ba')
-    Wy = tfe.Variable(tf.random_normal([nodes, C], stddev=weights_init_stddev), name='Wy')
-    by = tfe.Variable(tf.zeros([1, C]), name='by')
-    variables = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
-    variables_list = variables.values()
+    variables, variables_list = model.create_weights(C)
 
     # create optimizer
     optimizer = tf.train.GradientDescentOptimizer(config.learning_rate)
@@ -61,6 +53,7 @@ def train(config):
                 # get gradients
                 grads = tape.gradient(loss, variables_list)
                 optimizer.apply_gradients(zip(grads, variables_list))
+
 
 
 

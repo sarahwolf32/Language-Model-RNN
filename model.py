@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+import tensorflow.contrib.eager as tfe
 from random import shuffle
 
 '''
@@ -78,6 +79,17 @@ class Model:
         return y_extended
 
     # build graph
+
+    def create_weights(self, C):
+        n = self.config.nodes
+        std = self.config.weights_init_stddev
+        Wa = tfe.Variable(tf.random_normal([n + C, n], stddev=std), name='Wa')
+        ba = tfe.Variable(tf.zeros([1, n]), name='ba')
+        Wy = tfe.Variable(tf.random_normal([n, C], stddev=std), name='Wy')
+        by = tfe.Variable(tf.zeros([1, C]), name='by')
+        variables = {'Wa': Wa, 'ba': ba, 'Wy': Wy, 'by': by}
+        variables_list = variables.values()
+        return variables, variables_list
 
     def input_letter(self, prev_y, prev_a, var):
         '''
