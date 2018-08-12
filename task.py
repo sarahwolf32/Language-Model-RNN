@@ -11,12 +11,17 @@ My Code Wish List:
     - write loss to tensorboard (use eager summary, might need internet)
     - save model (inherit from keras???) - need internet to research
     - fix one-hot shapes/types (a little messier than needbe)
+
+The real next step:
+    - compare hyparams with Ng's version
+    - fix non-standard character display
 '''
+
+
 
 tf.enable_eager_execution()
 
 def sample(n, variables, model, code_map, C):
-    print("drawing samples!")
     for i in range(n):
         word = model.sample_word(variables, code_map, C)
         print(word)
@@ -38,7 +43,11 @@ def train(config):
     variables, variables_list = model.create_weights(C)
 
     # create optimizer
-    optimizer = tf.train.GradientDescentOptimizer(config.learning_rate)
+    optimizer = tf.train.AdamOptimizer(learning_rate=config.learning_rate)
+
+    # track best
+    lowest_loss = None
+    lowest_loss_epoch = None
 
     # train loop
     print("\nSamples after no training:")
@@ -64,11 +73,15 @@ def train(config):
 
         # print epoch stats
         print("\nepoch " + str(epoch))
-        sample(3, variables, model, code_map, C)
+        sample(2, variables, model, code_map, C)
         avg_loss = np.mean(losses)
+        if (lowest_loss == None) or (avg_loss < lowest_loss):
+            lowest_loss = avg_loss
+            lowest_loss_epoch = epoch
         print("avg_loss = " + str(avg_loss))
 
-
+    # print final stats
+    print("\nLowest loss = " + str(lowest_loss) + ", epoch " + str(lowest_loss_epoch))
 
 
 
@@ -77,9 +90,9 @@ if __name__=='__main__':
     # config arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('--data-dir', default='elvish_words.txt')
-    parser.add_argument('--num-epochs', type=int, default=10)
-    parser.add_argument('--nodes', type=int, default=10)
-    parser.add_argument('--learning-rate', type=float, default=0.01)
+    parser.add_argument('--num-epochs', type=int, default=200)
+    parser.add_argument('--nodes', type=int, default=80)
+    parser.add_argument('--learning-rate', type=float, default=0.001)
     parser.add_argument('--weights-init-stddev', type=float, default=0.2)
     config = parser.parse_args()
 
