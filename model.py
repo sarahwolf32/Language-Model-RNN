@@ -105,7 +105,6 @@ class Model:
         Wa, ba, Wy, by = var['Wa'], var['ba'], var['Wy'], var['by']
         inputs = tf.concat([prev_y, prev_a], axis=1)
         a = tf.nn.tanh(tf.matmul(inputs, Wa) + ba)
-        #y_pred = tf.nn.sigmoid(tf.matmul(a, Wy) + by)
         y_pred = tf.nn.softmax(tf.matmul(a, Wy) + by)
         return (y_pred, a)
 

@@ -2,9 +2,19 @@
 
 A letter-based language model for generating new words similar to a trained-on list of words. Includes a trained model for generating Tolkein-style Elvish names.
 
-## What is an RNN?
+## Why RNNs?
 
-RNNs (Recurrent Neural Networks) are a class of neural networks designed to handle sequences. 
+A great deal of the data we care about - music, language, anything with a time dimension - comes in the form of <i>sequences</i>. Unfortunately, standard fully connected neural networks do not handle sequences well. They expect input and output data to be of a fixed size, which is not well-suited to working with words or sentences, which can vary in length. While one could pad the sequences to a max size, this would still require a larger network than needed, an inefficiency we'd like to avoid.
+
+The more serious limitation is that if you <i>did</i> put a sequence into a standard neural network, it would not be able to generalize its learnings at a given input index to other input positions. For example, if the sentence 'Harry Potter took off his glasses' helped it learn that 'Harry' is a name, this would not necessarily improve its ability to predict that 'Harry' is a name in the sequence 'She looked up at Harry', because it occurs at a different position.
+
+So, how do RNNs help with this?
+
+Recurrent Neural Networks (RNNs) are a class of neural networks that <i>share parameters</i> over input positions. This allows learnings to at one time step to be potentially generalized to others. Predictions at one time step can also be influenced by recent inputs. 
+
+This level of flexibility is key.  
+
+## What is a Language Model?
 
 ## Acknowledgements
 
