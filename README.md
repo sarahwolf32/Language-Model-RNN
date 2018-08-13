@@ -8,13 +8,13 @@ A great deal of the data we care about - music, language, anything with a time d
 
 The more serious limitation is that if you <i>did</i> put a sequence into a standard neural network, it would not be able to generalize its learnings at a given input index to other input positions. For example, if the sentence 'Harry Potter took off his glasses' helped it learn that 'Harry' is a name, this would not necessarily improve its ability to predict that 'Harry' is a name in the sequence 'She looked up at Harry', because it occurs at a different position.
 
-So, how do RNNs help with this?
+Recurrent Neural Networks (RNNs) are a class of neural networks that <i>share parameters</i> over input positions. This allows learnings to at one time-step to be potentially generalized to others. They also maintain an internal state (which we can think of as "memory") that is passed forward between time-steps.
 
-Recurrent Neural Networks (RNNs) are a class of neural networks that <i>share parameters</i> over input positions. This allows learnings to at one time step to be potentially generalized to others. Predictions at one time step can also be influenced by recent inputs. 
+While there are many variations on RNNs, this is an implementation of a vanilla RNN, the simplest version. 
 
-This level of flexibility is key.  
+## Language Models
 
-## What is a Language Model?
+
 
 ## Acknowledgements
 
