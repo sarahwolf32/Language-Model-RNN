@@ -90,13 +90,24 @@ def train(config):
     print("\nLowest loss = " + str(lowest_loss) + ", epoch " + str(lowest_loss_epoch))
 
 def load_model(config):
-    model = Model(config)
 
-    variables, variables_list = model.create_weights(33)
+    # unpickle structure
+    filename = config.model_dir + '/model-structure.pickle'
+    with open(filename, 'rb') as handle:
+        structure = pickle.load(handle)
+    config.nodes = structure['nodes']
+    code_map = structure['code_map']
+    C = len(code_map)
+
+    # load variables
+    model = Model(config)
+    variables, variables_list = model.create_weights(C)
     saver = tfe.Saver(variables_list)
     model_path = str(tf.train.latest_checkpoint(config.model_dir))
     saver.restore(model_path)
-    print(variables_list)
+
+    # draw samples
+    sample(config.num_samples, variables, model, code_map, C)
 
 
 if __name__=='__main__':
@@ -106,7 +117,7 @@ if __name__=='__main__':
 
     # train arguments
     parser.add_argument('--train', type=bool, default=False)
-    parser.add_argument('--data-dir', default='elvish_words.txt')
+    parser.add_argument('--data-dir', default='dinosaur_names.txt')
     parser.add_argument('--num-epochs', type=int, default=200)
     parser.add_argument('--nodes', type=int, default=80)
     parser.add_argument('--learning-rate', type=float, default=0.001)
@@ -114,7 +125,9 @@ if __name__=='__main__':
     parser.add_argument('--save-dir', default='checkpoints')
 
     # sample arguments
-    parser.add_argument('--model-dir', default='elvish_words_model')
+    parser.add_argument('--model-dir', default='dinosaur_names_model')
+    parser.add_argument('--output-dir', default='output')
+    parser.add_argument('--num-samples', type=int, default=100)
     config = parser.parse_args()
 
     if config.train:

@@ -1,6 +1,10 @@
-# Language-Model-RNN
+# Character-Level Language Model with a Vanilla RNN
 
 A letter-based language model for generating new words similar to a trained-on list of words. Includes a trained model for generating Tolkein-style Elvish names.
+
+## What is an RNN?
+
+RNNs (Recurrent Neural Networks) are a class of neural networks designed to handle sequences. 
 
 ## Acknowledgements
 

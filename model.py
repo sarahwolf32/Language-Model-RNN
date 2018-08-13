@@ -155,11 +155,13 @@ class Model:
             # make a random letter choice weighted by y_probs
             code = np.random.choice(len(y_probs), p=y_probs)
             letter = code_map[code]
-            word += letter
 
             # break if word is finished or exceeded length limit
             if (letter == '<END>') or (len(word) >= max_length):
                 break
+
+            # add letter to word
+            word += letter
 
         return word
 
