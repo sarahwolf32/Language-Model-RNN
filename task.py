@@ -3,17 +3,15 @@ import tensorflow.contrib.eager as tfe
 import numpy as np
 from model import Model
 import argparse
+import pickle
+import os
 
 '''
 Use eager execution to train my vanilla-RNN.
 
 My Code Wish List:
     - write loss to tensorboard (use eager summary, might need internet)
-    - save model (inherit from keras???) - need internet to research
     - fix one-hot shapes/types (a little messier than needbe)
-
-The real next step:
-    - compare hyparams with Ng's version
     - fix non-standard character display
 '''
 
@@ -26,6 +24,14 @@ def sample(n, variables, model, code_map, C):
         word = model.sample_word(variables, code_map, C)
         print(word)
 
+def save_model_structure(config, code_map):
+    if not os.path.exists(config.save_dir):
+        os.makedirs(config.save_dir)
+    save_dict = {'nodes': config.nodes, 'code_map': code_map}
+    save_path = config.save_dir + '/model-structure.pickle'
+    with open(save_path, 'wb') as handle:
+        pickle.dump(save_dict, handle)
+
 def train(config):
 
     model = Model(config)
@@ -33,16 +39,14 @@ def train(config):
     # import words
     words = model.words_list()
     print("Found " + str(len(words)) + " words!")
-
-    # create dataset
     dataset = model.create_dataset(words)
     character_map, code_map = model.character_maps(words)
+    save_model_structure(config, code_map)
     C = len(character_map)
 
     # create variables
     variables, variables_list = model.create_weights(C)
-
-    # create optimizer
+    saver = tfe.Saver(variables)
     optimizer = tf.train.AdamOptimizer(learning_rate=config.learning_rate)
 
     # track best
@@ -78,25 +82,46 @@ def train(config):
         if (lowest_loss == None) or (avg_loss < lowest_loss):
             lowest_loss = avg_loss
             lowest_loss_epoch = epoch
+            save_path = config.save_dir + '/checkpoint.ckpt'
+            saver.save(save_path, global_step=epoch)
         print("avg_loss = " + str(avg_loss))
 
     # print final stats
     print("\nLowest loss = " + str(lowest_loss) + ", epoch " + str(lowest_loss_epoch))
 
+def load_model(config):
+    model = Model(config)
+
+    variables, variables_list = model.create_weights(33)
+    saver = tfe.Saver(variables_list)
+    model_path = str(tf.train.latest_checkpoint(config.model_dir))
+    saver.restore(model_path)
+    print(variables_list)
 
 
 if __name__=='__main__':
 
     # config arguments
     parser = argparse.ArgumentParser()
+
+    # train arguments
+    parser.add_argument('--train', type=bool, default=False)
     parser.add_argument('--data-dir', default='elvish_words.txt')
     parser.add_argument('--num-epochs', type=int, default=200)
     parser.add_argument('--nodes', type=int, default=80)
     parser.add_argument('--learning-rate', type=float, default=0.001)
     parser.add_argument('--weights-init-stddev', type=float, default=0.2)
+    parser.add_argument('--save-dir', default='checkpoints')
+
+    # sample arguments
+    parser.add_argument('--model-dir', default='elvish_words_model')
     config = parser.parse_args()
 
-    train(config)
+    if config.train:
+        train(config)
+    else:
+        load_model(config)
+
 
 
 
