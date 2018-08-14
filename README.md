@@ -22,7 +22,7 @@ While there are many variations on RNNs, this is an implementation of a vanilla 
 
 ## The Loss Function
 
-To compute the loss for a given word, we first compute the losses at each time-step <i>t</i> (each letter). We use a loss function commonly used for softmax outputs, that considers only the probability assigned to the "correct" letter. You can see this in the equation below. Since y<t> is a one-hot letter vector with zero entries in all but one index, and anything times zero is zero, only the index where <i>y<sub>i</sub><t> = 1</i> will count toward the sum. 
+To compute the loss for a given word, we first compute the losses at each time-step <i>t</i> (each letter). We use a loss function commonly used for softmax outputs, that considers only the probability assigned to the "correct" letter. You can see this in the equation below. Since y<sup>\<t></sup> is a one-hot letter vector with zero entries in all but one index, and anything times zero is zero, only the index where y<sub>i</sub><sup>\<t></sup> = 1 will count toward the sum. 
 
 <!-- L(y<t>, y_hat<t> = - sum[y<t>log(y_hat<t>)] -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})=-\sum_{i}y_{i}^{<t>}log(\hat{^}^{y}_{i}^{<t>})" title="\huge \mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})=-\sum_{i}y_{i}^{<t>}log(\hat{^}^{y}_{i}^{<t>})" />
