@@ -26,19 +26,17 @@ In our case, we will train a model to predict P(word), given the sequence of let
 
 For example, in the space of English words, we would expect the P(a|ca) to be low, since "caa" is not a common combination in English. By the same token, P(r|ca) should be higher, because there are many English words that include "car", like "car", "carry", "carnival", etc. This is the sort of thing we want our model to learn.
 
-If we input a word like "cat" into our language model, it will output the probability of each letter given the previous ones. So we will have:
-
-P(c), P(a|c), P(t|ca), P(<i>end</i>|cat)
-
-Here, <i>end</i> is a special tag that tells the language model to stop adding letters. It is important when words can be of variable length. 
+If we input a word like "cat" into our language model, it will output the probability of each letter given the previous ones. So we will have values for: P(c), P(a|c), P(t|ca), P(<i>end</i>|cat). Here, <i>end</i> is a special tag that tells the language model to stop adding letters. It is important when words can be of variable length. 
 
 Since the basic rule of conditional probability is that:
 
-P(AB) = P(A|B) * P(B)
+<!--P(AB) = P(A|B) * P(B)-->
+<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;P(AB)&space;=&space;P(A|B)&space;*&space;P(B)" title="\huge P(AB) = P(A|B) * P(B)" />
 
 It follows that:
 
-P(cat-<i>end</i>>) = P(<i>end</i>>|cat) * P(t|ca) * P(a|c) * P(c)
+<!-- P(cat-<i>end</i>>) = P(<i>end</i>>|cat) * P(t|ca) * P(a|c) * P(c) -->
+<img src="https://latex.codecogs.com/gif.latex?\dpi{100}&space;\LARGE&space;P('cat')&space;=&space;P(c)*P(a|c)*P(t|ca)*P(end|cat)" title="\LARGE P('cat') = P(c)*P(a|c)*P(t|ca)*P(end|cat)" />
 
 In other words, we can compute P(word) by multiplying together the conditional probabilities of each letter.
 
