@@ -42,9 +42,9 @@ In other words, we can compute P(word) by multiplying together the conditional p
 
 ## The Architecture
 
-Our vanilla RNN consists of one simple "cell". At each time-step <i>t</i> feed the previous letter y/<t-1> and the previous cell activation a\<t-1> into the cell, and it outputs a probability distribution for the current letter, ŷ\<t>. Since there will be no previous letter or activation for the first letter of a word, we'll simply feed in a vector of zeros for both.
+Our vanilla RNN consists of one simple "cell". At each time-step <i>t</i> feed the previous letter y\<t-1> and the previous cell activation a\<t-1> into the cell, and it outputs a probability distribution for the current letter, ŷ\<t>. Since there will be no previous letter or activation for the first letter of a word, we'll simply feed in a vector of zeros for both.
 
-<img height="250" src="language-model-diagram.png" title="language model diagram and equations"/>
+<img height="270" src="language-model-diagram.png" title="language model diagram and equations"/>
 
 ## The Loss Function
 
