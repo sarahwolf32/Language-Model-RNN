@@ -14,7 +14,11 @@ While there are many variations on RNNs, this is an implementation of a vanilla 
 
 ## Language Models
 
+<!-- a<t> = tanh(Wa[y<t-1>, a<t-1>] + ba) -->
+<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;a^{<t>}=tanh(W_{a}[a^{t-1},y^{<t-1>}]&space;&plus;&space;b_{a})" title="\huge a^{<t>}=tanh(W_{a}[a^{t-1},y^{<t-1>}] + b_{a})" />
 
+<!-- y_hat<t> = softmax(Wy[a<t>] + by) -->
+<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\widehat{^}^{y}^{<t>}=softmax(W_{y}\cdot&space;a^{<t>}&space;&plus;&space;b_{y})" title="\huge \widehat{^}^{y}^{<t>}=softmax(W_{y}\cdot a^{<t>} + b_{y})" />
 
 ## Acknowledgements
 
