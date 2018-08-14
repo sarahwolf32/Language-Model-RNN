@@ -42,6 +42,8 @@ In other words, we can compute P(word) by multiplying together the conditional p
 
 ## The Architecture
 
+<img height="250" src="language-model-diagram.png" title="language model diagram"/>
+
 <!-- a<t> = tanh(Wa[y<t-1>, a<t-1>] + ba) -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;a^{<t>}=tanh(W_{a}[a^{t-1},y^{<t-1>}]&space;&plus;&space;b_{a})" title="\huge a^{<t>}=tanh(W_{a}[a^{t-1},y^{<t-1>}] + b_{a})" />
 
