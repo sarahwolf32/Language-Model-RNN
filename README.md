@@ -24,11 +24,7 @@ Broadly speaking, language models are built to predict the probability of a sequ
 
 In our case, we will train a model to predict P(word), given the sequence of letters within it. At each time step, the RNN attempts to predict the next letter, given the previous letter and its internal memory state. 
 
-For example, in the space of English words, we would expect the P(t|k) to be low, since "kt" is not a common combination in English. By the same token, P(r|ca) should be higher, because there are many english words that include "car", like "car", "carry", "carnival", etc. This is the sort of thing we want our model to learn.
-
-
-
-Our goal is to invent new words of similar style to the training words. 
+For example, in the space of English words, we would expect the P(a|ca) to be low, since "caa" is not a common combination in English. By the same token, P(r|ca) should be higher, because there are many english words that include "car", like "car", "carry", "carnival", etc. This is the sort of thing we want our model to learn.
 
 
 ## The Architecture
@@ -50,6 +46,11 @@ We can then compute the loss for a word by simply summing its per-letter losses.
 
 <!-- L(y, y_hat) = sum[L(y<t>, y_hat<t>)] -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\mathcal{L}(y,\hat{^}^{y})&space;=&space;\sum_{t}\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})" title="\huge \mathcal{L}(y,\hat{^}^{y}) = \sum_{t}\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})" />
+
+## Generating Words
+
+Once we have trained the model, our goal is to invent new words of similar style to the training words. 
+
 
 ## Acknowledgements
 
