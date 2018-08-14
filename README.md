@@ -18,19 +18,19 @@ While there are many variations on RNNs, this is an implementation of a vanilla 
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;a^{<t>}=tanh(W_{a}[a^{t-1},y^{<t-1>}]&space;&plus;&space;b_{a})" title="\huge a^{<t>}=tanh(W_{a}[a^{t-1},y^{<t-1>}] + b_{a})" />
 
 <!-- y_hat<t> = softmax(Wy[a<t>] + by) -->
-<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\widehat{^}^{y}^{<t>}=softmax(W_{y}\cdot&space;a^{<t>}&space;&plus;&space;b_{y})" title="\huge \widehat{^}^{y}^{<t>}=softmax(W_{y}\cdot a^{<t>} + b_{y})" />
+<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\hat{^}^{y}^{<t>}=softmax(W_{y}\cdot&space;a^{<t>}&space;&plus;&space;b_{y})" title="\huge \hat{^}^{y}^{<t>}=softmax(W_{y}\cdot a^{<t>} + b_{y})" />
 
 ## The Loss Function
 
-To compute the loss for a given word, we compute the losses at each time-step <i>t</i> (each letter), and sum them.
+To compute the loss for a given word, we first compute the losses at each time-step <i>t</i> (each letter). We use a loss function commonly used for softmax outputs, that considers only the probability assigned to the "correct" letter. You can see this in the equation below. Since y<t> is a one-hot letter vector with zero entries in all but one index, and anything times zero is zero, only the index i where y<t> = 1 will count toward the sum. 
+
+Once we have the per-letter losses, we can compute the loss for the word by simply summing them.
 
 <!-- L(y<t>, y_hat<t> = - sum[y<t>log(y_hat<t>)] -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})=-\sum_{i}y_{i}^{<t>}log(\hat{^}^{y}_{i}^{<t>})" title="\huge \mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})=-\sum_{i}y_{i}^{<t>}log(\hat{^}^{y}_{i}^{<t>})" />
 
 <!-- L(y, y_hat) = sum[L(y<t>, y_hat<t>)] -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\mathcal{L}(y,\hat{^}^{y})&space;=&space;\sum_{t}\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})" title="\huge \mathcal{L}(y,\hat{^}^{y}) = \sum_{t}\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})" />
-
-
 
 ## Acknowledgements
 
