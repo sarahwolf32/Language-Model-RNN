@@ -28,9 +28,9 @@ For example, in the space of English words, we would expect the P(a|ca) to be lo
 
 If we input a word like "cat" into our language model, it will output the probability of each letter given the previous ones. So we will have:
 
-P(c), P(a|c), P(t|ca), P(\<END>|cat)
+P(c), P(a|c), P(t|ca), P(<i>end</i>|cat)
 
-Here, \<END> is a special tag that tells the language model to stop adding letters. It is important when words can be of variable length. 
+Here, <i>end</i> is a special tag that tells the language model to stop adding letters. It is important when words can be of variable length. 
 
 Since the basic rule of conditional probability is that:
 
@@ -38,7 +38,7 @@ P(AB) = P(A|B) * P(B)
 
 It follows that:
 
-P(cat\<END>) = P(\<END>|cat) * P(t|ca) * P(a|c) * P(c)
+P(cat-<i>end</i>>) = P(<i>end</i>>|cat) * P(t|ca) * P(a|c) * P(c)
 
 In other words, we can compute P(word) by multiplying together the conditional probabilities of each letter.
 
