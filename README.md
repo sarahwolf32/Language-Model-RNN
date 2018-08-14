@@ -15,12 +15,12 @@ While there are many variations on RNNs, this is an implementation of a vanilla 
 ## Language Models
 
 Broadly speaking, language models are built to predict the probability of a sequence. This can be used to:
-    * Generate new plausible sequences 
-        * For example - inventing words, writing sentences, writing music
-    * Pick the most plausible sequence given a few options 
-        * For example, helping a handwriting recognition system decide that an unreadable letter in a three-letter word between <i>a</i> and <i>d</i> is probably <i>n</i>.
-    * Suggest likely ways to complete a partial sequence
-        * E.g., autocomplete.
+* Generate new plausible sequences 
+    * For example - inventing words, writing sentences, writing music
+* Pick the most plausible sequence given a few options 
+    * For example, helping a handwriting recognition system decide that an unreadable letter in a three-letter word between <i>a</i> and <i>d</i> is probably <i>n</i>.
+* Suggest likely ways to complete a partial sequence
+    * E.g., autocomplete.
 
 In our case, we will train a model to predict P(word), given the sequence of letters within it. At each time step, the RNN attempts to predict the next letter, given the previous letter and its internal memory state. 
 
