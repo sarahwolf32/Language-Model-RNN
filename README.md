@@ -20,6 +20,18 @@ While there are many variations on RNNs, this is an implementation of a vanilla 
 <!-- y_hat<t> = softmax(Wy[a<t>] + by) -->
 <img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\widehat{^}^{y}^{<t>}=softmax(W_{y}\cdot&space;a^{<t>}&space;&plus;&space;b_{y})" title="\huge \widehat{^}^{y}^{<t>}=softmax(W_{y}\cdot a^{<t>} + b_{y})" />
 
+## The Loss Function
+
+To compute the loss for a given word, we compute the losses at each time-step <i>t</i> (each letter), and sum them.
+
+<!-- L(y<t>, y_hat<t> = - sum[y<t>log(y_hat<t>)] -->
+<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})=-\sum_{i}y_{i}^{<t>}log(\hat{^}^{y}_{i}^{<t>})" title="\huge \mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})=-\sum_{i}y_{i}^{<t>}log(\hat{^}^{y}_{i}^{<t>})" />
+
+<!-- L(y, y_hat) = sum[L(y<t>, y_hat<t>)] -->
+<img src="https://latex.codecogs.com/gif.latex?\dpi{80}&space;\huge&space;\mathcal{L}(y,\hat{^}^{y})&space;=&space;\sum_{t}\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})" title="\huge \mathcal{L}(y,\hat{^}^{y}) = \sum_{t}\mathcal{L}(y^{<t>},\hat{^}^{y}^{<t>})" />
+
+
+
 ## Acknowledgements
 
 * Inspired by Andrew Ng's lecture on language models in this [Coursera Specialization](https://www.coursera.org/specializations/deep-learning) on Deep Learning.
