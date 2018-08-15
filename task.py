@@ -117,7 +117,7 @@ if __name__=='__main__':
 
     # train arguments
     parser.add_argument('--train', type=bool, default=False)
-    parser.add_argument('--data-dir', default='dinosaur_names.txt')
+    parser.add_argument('--data-dir', default='word_lists/dinosaur_names.txt')
     parser.add_argument('--num-epochs', type=int, default=200)
     parser.add_argument('--nodes', type=int, default=80)
     parser.add_argument('--learning-rate', type=float, default=0.001)
@@ -125,7 +125,7 @@ if __name__=='__main__':
     parser.add_argument('--save-dir', default='checkpoints')
 
     # sample arguments
-    parser.add_argument('--model-dir', default='dinosaur_names_model')
+    parser.add_argument('--model-dir', default='models/dinosaur_names_model')
     parser.add_argument('--output-dir', default='output')
     parser.add_argument('--num-samples', type=int, default=100)
     config = parser.parse_args()
