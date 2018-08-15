@@ -62,6 +62,30 @@ We can then compute the loss for a word by simply summing its per-letter losses.
 
 Once we have trained the model, our goal is to invent new words of similar style to the training words. To sample words from our model, we pick the letter <i>y<sup>\<t></sup></i> randomly, weighting by the probability distribution output for <i>ŷ<sup>\<t></sup></i>. Our chosen <i>y<sup>\<t></sup></i> is then fed into the model at the next time step. This continues until the <i>end</i> tag is chosen. 
 
+## Trained Models
+
+I've included a couple of models trained with this code. 
+
+## Training Your Own
+
+To train your own character-level language model using this code, you only need a list of words stored in a ```.txt``` file. There should be one word per line.
+
+To train:
+1. Download this code and navigate to the project directory
+2. Run ```python task.py --train True --data-dir [PATH_TO_YOUR_WORD_LIST]```
+3. The model will be saved into a ```checkpoints``` directory by default. You can save it somewhere else by adding ```--save-dir [YOUR_SAVE_LOCATION]``` to the train command.
+
+After some experimentation, I found that the following hyperparameters worked well:
+
+```
+nodes = 80
+learning_rate = 0.001
+num_epochs = 200
+optimizer = Adam
+```
+
+These are set as the defaults, but if you wish to change them, there are command line arguments to set them all, except for the Adam optimizer, which you must switch in the code. 
+
 ## Acknowledgements
 
 * Inspired by Andrew Ng's lecture on language models in this [Coursera Specialization](https://www.coursera.org/specializations/deep-learning) on Deep Learning.
