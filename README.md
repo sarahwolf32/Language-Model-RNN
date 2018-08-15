@@ -42,7 +42,7 @@ In other words, we can compute P(word) by multiplying together the conditional p
 
 ## The Architecture
 
-Our vanilla RNN consists of one simple "cell". At each time-step <i>t</i> feed the previous letter <i>y<sup>\<t-1></sup></i> and the previous cell activation <i>a<sup>\<t-1></sup></i> into the cell, and it outputs a probability distribution for the current letter, <i>ŷ<sup>\<t></sup></i>. Since there will be no previous letter or activation for the first letter of a word, we'll simply feed in a vector of zeros for both.
+Our vanilla RNN consists of one simple "cell". At each time-step <i>t</i> we feed the previous letter <i>y<sup>\<t-1></sup></i> and the previous cell activation <i>a<sup>\<t-1></sup></i> into the cell, and it outputs a probability distribution for the current letter, <i>ŷ<sup>\<t></sup></i>. Since there will be no previous letter or activation for the first letter of a word, we'll simply feed in a vector of zeros for both.
 
 <img height="270" src="language-model-diagram.png" title="language model diagram and equations"/>
 
@@ -60,8 +60,7 @@ We can then compute the loss for a word by simply summing its per-letter losses.
 
 ## Generating Words
 
-Once we have trained the model, our goal is to invent new words of similar style to the training words. 
-
+Once we have trained the model, our goal is to invent new words of similar style to the training words. To sample words from our model, we pick the letter <i>y<sup>\<t></sup></i> randomly, weighting by the probability distribution output for <i>ŷ<sup>\<t></sup></i>. Our chosen <i>y<sup>\<t></sup></i> is then fed into the model at the next time step. This continues until the <i>end</i> tag is chosen. 
 
 ## Acknowledgements
 
