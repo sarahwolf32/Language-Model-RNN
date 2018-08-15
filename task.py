@@ -60,7 +60,7 @@ def train(config):
 
         losses = []
         for tensor in dataset.make_one_shot_iterator():
-            word = tensor.numpy()
+            word = tensor.numpy().decode('utf-8')
             y = model.vectorize_word(word, character_map, C)
             with tf.GradientTape() as tape:
                 y_pred = model.input_word(y, variables, C)
@@ -117,7 +117,7 @@ if __name__=='__main__':
 
     # train arguments
     parser.add_argument('--train', type=bool, default=False)
-    parser.add_argument('--data-dir', default='word_lists/dinosaur_names.txt')
+    parser.add_argument('--data-dir', default='word_lists/elvish_words.txt')
     parser.add_argument('--num-epochs', type=int, default=200)
     parser.add_argument('--nodes', type=int, default=80)
     parser.add_argument('--learning-rate', type=float, default=0.001)
