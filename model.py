@@ -3,12 +3,6 @@ import tensorflow as tf
 import tensorflow.contrib.eager as tfe
 from random import shuffle
 
-'''
-What can this model do?
-    1. Generate new Elvish names.
-    2. Score words on how 'Elvish' they are.
-'''
-
 class Model:
 
     def __init__(self, config):

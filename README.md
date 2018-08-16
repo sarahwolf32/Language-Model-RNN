@@ -62,9 +62,35 @@ We can then compute the loss for a word by simply summing its per-letter losses.
 
 Once we have trained the model, our goal is to invent new words of similar style to the training words. To sample words from our model, we pick the letter <i>y<sup>\<t></sup></i> randomly, weighting by the probability distribution output for <i>ŷ<sup>\<t></sup></i>. Our chosen <i>y<sup>\<t></sup></i> is then fed into the model at the next time step. This continues until the <i>end</i> tag is chosen. 
 
-## Trained Models
+## Generating Pokemon Names
 
-I've included a couple of models trained with this code. 
+I used this code to train a model on a list of 796 Pokemon names, for the purpose of generating new Pokemon names. Here are a few examples of names it learned to generate:
+
+Generated Pokemon names:
+* Tintorn
+* Fyreion
+* Benelon
+* Rantio
+* Zoreion
+* Wireoon
+* Sirg
+* Qindlor
+* Fergai
+* Siltion
+
+Real Pokemon names (for comparison):
+* Yanmega
+* Leafeon
+* Glaceon
+* Gliscor
+* Mamoswine
+* Gallade
+* Palpitoad
+* Seismitoad
+* Throh
+* Sawk
+
+You can find this model, and a few others, in the ```models``` folder. To load and generate words with it, just type ```python task.py --model-dir models/pokemon_names_model --num-samples [NUMBER OF WORDS YOU WANT TO GENERATE]```. This will save the generated words in ```output/sample.txt```.
 
 ## Training Your Own
 

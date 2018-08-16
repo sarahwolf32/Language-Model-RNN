@@ -6,11 +6,6 @@ import argparse
 import pickle
 import os
 
-'''
-TODO:
-- write loss to tensorboard
-'''
-
 tf.enable_eager_execution()
 
 def sample(n, variables, model, code_map, C, filename, config):
@@ -131,7 +126,7 @@ if __name__=='__main__':
 
     # train arguments
     parser.add_argument('--train', type=bool, default=False)
-    parser.add_argument('--data-dir', default='word_lists/elvish_words.txt')
+    parser.add_argument('--data-dir', default='word_lists/pokemon_names.txt')
     parser.add_argument('--num-epochs', type=int, default=150)
     parser.add_argument('--nodes', type=int, default=80)
     parser.add_argument('--learning-rate', type=float, default=0.001)
@@ -140,9 +135,9 @@ if __name__=='__main__':
     parser.add_argument('--log-dir', default='logs')
 
     # sample arguments
-    parser.add_argument('--model-dir', default='models/dinosaur_names_model')
+    parser.add_argument('--model-dir', default='models/pokemon_names_model')
     parser.add_argument('--output-dir', default='output')
-    parser.add_argument('--num-samples', type=int, default=100)
+    parser.add_argument('--num-samples', type=int, default=500)
     config = parser.parse_args()
 
     if config.train:
