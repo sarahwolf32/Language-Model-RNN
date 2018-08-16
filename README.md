@@ -64,11 +64,11 @@ Once we have trained the model, our goal is to invent new words of similar style
 
 ## Generating Pokemon Names
 
-I used this code to train a model on a list of 796 Pokemon names, for the purpose of generating new Pokemon names. Here are a few examples of names it learned to generate:
+I used this code to train a language model on a list of 796 Pokemon names (see ```word_lists/pokemon_names.txt```), for the purpose of generating new Pokemon names. Here are a few examples of names it learned to generate:
 
-Generated Pokemon names:
-* Tintorn
-* Fyreion
+Generated Pokemon names:        
+* Tintorn                       
+* Fyreion                       
 * Benelon
 * Rantio
 * Zoreion
@@ -78,7 +78,7 @@ Generated Pokemon names:
 * Fergai
 * Siltion
 
-Real Pokemon names (for comparison):
+For comparison, here are some real Pokemon names:
 * Yanmega
 * Leafeon
 * Glaceon
@@ -91,6 +91,10 @@ Real Pokemon names (for comparison):
 * Sawk
 
 You can find this model, and a few others, in the ```models``` folder. To load and generate words with it, just type ```python task.py --model-dir models/pokemon_names_model --num-samples [NUMBER OF WORDS YOU WANT TO GENERATE]```. This will save the generated words in ```output/sample.txt```.
+
+Overall, I am quite happy with quality of the generated names. I can even imagine what kind of Pokemon <i>Fyreion</i>, <i>Rantio</i>, or <i>Tintorn</i> might be. And <i>Sirg</i> is just plain cool. 
+
+However, when I generated 500 Pokemon names and compared them to the real list, I noticed that the generated names did not have as much variation. For example, most of the generated names ended in <i>n</i>, and almost all were exactly 7 characters long. It is common for real Pokemon names to have those qualities, but not nearly to this extent. If I were to put more time into this project, I would focus on addressing this loss of variation.
 
 ## Training Your Own
 
