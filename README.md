@@ -1,4 +1,4 @@
-# Generating Pokemon Names with a character-Level language model RNN
+# Generating Pokemon names with a character-level language model RNN
 
 A letter-based language model for generating new words similar to a trained-on list of words. Includes a trained model for generating new Pokemon names.
 
@@ -116,10 +116,14 @@ optimizer = Adam
 
 These are set as the defaults, but if you wish to change them, there are command line arguments to set them all, except for the Adam optimizer, which you must switch in the code. 
 
+In addition to Pokemon names, there is training data for dinosaur species names, and for Tolkien-style Elvish words in the ```word_lists``` folder if you want to give those a try.
+
 ## Acknowledgements
 
 * Inspired by Andrew Ng's lecture on language models in this [Coursera Specialization](https://www.coursera.org/specializations/deep-learning) on Deep Learning.
 
 * The excellent [Tolkiendil](http://www.tolkiendil.com/langues/english/i-lam_arth/compound_sindarin_names) website was the source of my training data for Elvish names.
+
+
 
 
