@@ -90,7 +90,7 @@ For comparison, here are some real Pokemon names:
 * Throh
 * Sawk
 
-You can find this model, and a few others, in the ```models``` folder. To load and generate words with it, just type ```python task.py --model-dir models/pokemon_names_model --num-samples [NUMBER OF WORDS YOU WANT TO GENERATE]```. This will save the generated words in ```output/sample.txt```.
+You can find this model in the ```models``` folder. To load and generate words with it, just type ```python task.py --model-dir models/pokemon_names_model --num-samples [NUMBER OF WORDS YOU WANT TO GENERATE]```. This will save the generated words in ```output/sample.txt```.
 
 Overall, I am quite happy with quality of the generated names. I can even imagine what kind of Pokemon <i>Fyreion</i>, <i>Rantio</i>, or <i>Tintorn</i> might be. And <i>Sirg</i> is just plain cool. 
 
