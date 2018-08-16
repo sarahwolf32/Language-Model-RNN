@@ -1,6 +1,0 @@
-model_checkpoint_path: "checkpoint.ckpt-187"
-all_model_checkpoint_paths: "checkpoint.ckpt-144"
-all_model_checkpoint_paths: "checkpoint.ckpt-166"
-all_model_checkpoint_paths: "checkpoint.ckpt-176"
-all_model_checkpoint_paths: "checkpoint.ckpt-186"
-all_model_checkpoint_paths: "checkpoint.ckpt-187"

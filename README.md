@@ -1,6 +1,6 @@
-# Character-Level Language Model with a Vanilla RNN
+# Generating Pokemon Names with a character-Level language model RNN
 
-A letter-based language model for generating new words similar to a trained-on list of words. Includes a trained model for generating Tolkein-style Elvish names.
+A letter-based language model for generating new words similar to a trained-on list of words. Includes a trained model for generating new Pokemon names.
 
 ## Why RNNs?
 
@@ -110,7 +110,7 @@ After some experimentation, I found that the following hyperparameters worked we
 ```
 nodes = 80
 learning_rate = 0.001
-num_epochs = 200
+num_epochs = 150
 optimizer = Adam
 ```
 
