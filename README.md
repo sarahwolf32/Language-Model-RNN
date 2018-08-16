@@ -1,6 +1,6 @@
 # Generating Pokemon names with a character-level language model RNN
 
-A letter-based language model for generating new words similar to a trained-on list of words. Includes a trained model for generating new Pokemon names.
+This is a letter-based language model for inventing words using an RNN. Here, I will walk through how this sort of language model works, why it is an interesting topic, and then use it to generate new Pokemon names.
 
 ## Why RNNs?
 
@@ -122,8 +122,10 @@ In addition to Pokemon names, there is training data for dinosaur species names,
 
 * Inspired by Andrew Ng's lecture on language models in this [Coursera Specialization](https://www.coursera.org/specializations/deep-learning) on Deep Learning.
 
+* I got the full list of existing Pokemon names from the [Pokemon Database](https://pokemondb.net/pokedex/national).
+
 * The excellent [Tolkiendil](http://www.tolkiendil.com/langues/english/i-lam_arth/compound_sindarin_names) website was the source of my training data for Elvish names.
 
-
+* The dinosaur names list was scraped from the [Wikipedia page on dinosaur genera](https://en.wikipedia.org/wiki/List_of_dinosaur_genera)
 
 
